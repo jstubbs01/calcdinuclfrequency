@@ -43,14 +43,14 @@ calcdinuclfreq = function(query, ref) {
 
 plotdinuclcontent = function(dnvec) {
     .validateInputs(list(dnvec=c("numeric","list")))
-    gcdf = lapply(dnvec, as.data.frame)
+    dndf = lapply(dnvec, as.data.frame)
     # reshape2 is deprecated, but there's no other way to do this easily...
-    gcdfReshaped = reshape2::melt(gcdf, id.vars=NULL)
-    colnames(gcdfReshaped)[colnames(gcdfReshaped) == "L1"] = "regionSet"
+    dndfReshaped = reshape2::melt(dndf, id.vars=NULL)
+    colnames(dndfReshaped)[colnames(dndfReshaped) == "L1"] = "regionSet"
     # plot multiple regionsets if dnvec is a list
     if (is(dnvec, "list")) {
-        meansdf = aggregate(gcdfReshaped$value, list(gcdfReshaped$regionSet), mean)
-        g = ggplot2::ggplot(gcdfReshaped, aes(x=value, colour=regionSet)) +
+        meansdf = aggregate(dndfReshaped$value, list(dndfReshaped$regionSet), mean)
+        g = ggplot2::ggplot(dndfReshaped, aes(x=value, colour=regionSet)) +
         geom_density() +
         geom_vline(data=meansdf, aes(xintercept=x, colour=Group.1),
                    linetype="dashed", size=0.5) +
@@ -58,7 +58,7 @@ plotdinuclcontent = function(dnvec) {
         theme(legend.position = "bottom")
     } else {
         # plot a single regionset
-        g = ggplot2::ggplot(gcdfReshaped, aes(x=value)) + 
+        g = ggplot2::ggplot(dndfReshaped, aes(x=value)) + 
         geom_density() + 
         geom_vline(aes(xintercept=mean(value)),
                    color="red", linetype="dashed", size=0.5) + 
