@@ -30,7 +30,7 @@
   
   calcdinuclfreq = function(query, ref) {
     
-    # here I used the same function structure from calcGCcontent
+    
     # query and ref as input, gvec as output
     
     
