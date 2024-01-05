@@ -5,7 +5,7 @@
 \description{
 Given a reference genome as a BSgenome object and some ranges on that
 reference, this function will return a vector of the same length as the
-granges object, with percent of Cs and Gs.
+granges object, with percent of nucleotides.
 }
 \usage{
 calcdinuclfreq(x)
@@ -35,19 +35,20 @@ calcdinuclfreq = function(query, ref) {
         return(x)
     }
     v = IRanges::Views(ref, query)
-    gcvec = apply(Biostrings::dinucleotideFrequency(v))
-    return(gcvec)
+    # DN = dinucleotide
+    dnvec = apply(Biostrings::dinucleotideFrequency(v))
+    return(dnvec)
 
 # plot dinucleotide frequency
 
-plotdinuclcontent = function(gcvec) {
-    .validateInputs(list(gcvec=c("numeric","list")))
-    gcdf = lapply(gcvec, as.data.frame)
+plotdinuclcontent = function(dnvec) {
+    .validateInputs(list(dnvec=c("numeric","list")))
+    gcdf = lapply(dnvec, as.data.frame)
     # reshape2 is deprecated, but there's no other way to do this easily...
     gcdfReshaped = reshape2::melt(gcdf, id.vars=NULL)
     colnames(gcdfReshaped)[colnames(gcdfReshaped) == "L1"] = "regionSet"
-    # plot multiple regionsets if gcvec is a list
-    if (is(gcvec, "list")) {
+    # plot multiple regionsets if dnvec is a list
+    if (is(dnvec, "list")) {
         meansdf = aggregate(gcdfReshaped$value, list(gcdfReshaped$regionSet), mean)
         g = ggplot2::ggplot(gcdfReshaped, aes(x=value, colour=regionSet)) +
         geom_density() +
@@ -64,9 +65,9 @@ plotdinuclcontent = function(gcvec) {
         theme_classic()
     }    
     g = g + 
-        ggtitle("GC content distribution") + 
+        ggtitle("DN content distribution") + 
         theme(plot.title = element_text(hjust=0.5)) +
-        xlab("gc %") + 
+        xlab("DN %") + 
         xlim(0,1) 
     return(g)
 }

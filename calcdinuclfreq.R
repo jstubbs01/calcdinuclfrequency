@@ -7,7 +7,7 @@
 
 # \title{Calculate dinucleotide frequency in a GRanges object}
 # \description{
-#  Given a reference genome as a BSgenome object and a GRanges, this function will return a list or numeric vector with with percent of Cs and Gs.
+#  Given a reference genome as a BSgenome object and a GRanges, this function will return a list or numeric vector with with percent of dinucleotides.
  #}
 # \usage{
   #calcdinuclfreq(x)
@@ -53,8 +53,8 @@
     # on an arbitrary Vector object, called the "subject"
     # The subject in this case are inputs
     
-    gcvec = apply(Biostrings::dinucleotideFrequency(v))
+    dnvec = apply(Biostrings::dinucleotideFrequency(v))
     
     # I swapped out alphabetfrequency function for dinucleotideFrequency
     
-    return(gcvec)
+    return(dnvec)
