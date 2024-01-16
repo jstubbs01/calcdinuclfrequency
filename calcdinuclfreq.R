@@ -31,7 +31,7 @@
   calcdinuclfreq = function(query, ref) {
     
     
-    # query and ref as input, gvec as output
+    # query and ref as input, dnvec as output
     
     
     .validateInputs(list(query=c("GRanges","GRangesList"),
