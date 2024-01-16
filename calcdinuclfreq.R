@@ -53,7 +53,7 @@
     # on an arbitrary Vector object, called the "subject"
     # The subject in this case are inputs
     
-    dnvec = apply(Biostrings::dinucleotideFrequency(v))
+    dnvec = Biostrings::dinucleotideFrequency(v)
     
     # I swapped out alphabetfrequency function for dinucleotideFrequency
     
